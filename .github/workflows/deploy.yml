@@ -1,0 +1,45 @@
+name: Deploy website preview to Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build for repository path
+        env:
+          GITHUB_PAGES_BASE: /${{ github.event.repository.name }}/
+        run: npm run build
+      - name: Configure Pages
+        uses: actions/configure-pages@v6
+      - name: Upload built site
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./dist
+      - name: Deploy to Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
