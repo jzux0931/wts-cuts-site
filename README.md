@@ -8,5 +8,5 @@ This is a preview for WT's to review. Square continues to handle bookings and pa
 
 - HTML, Sass, vanilla JavaScript, and Vite.
 - Responsive navigation and an accessible, manually controlled photo carousel.
-- Shop photos currently load from the public Squarespace CDN. Wanda should approve the selection and their use before a business launch.
+- Shop photos currently load from the public Squarespace CDN. WT's should approve the selection and their use before a business launch.
 - No private Square account access, backend, database, or checkout is included.
